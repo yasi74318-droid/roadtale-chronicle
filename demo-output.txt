@@ -1,0 +1,48 @@
+=== SCENARIO 1: Daily Chronicle — rainy Monday commute (Seoul, 40 min) ===
+[PLAN] mode=DAILY_CHRONICLE destination='Office' eta=2400s episode='The River Gate — Season 1, Episode 12' scenes=4 cliffhanger alignment error=0s
+[PLAN] companion=BAMI genre=MYSTERY theme='Warm Storybook' voice=warm grandmother/gentle/cozy
+[VARIETY] departure: rain: rainy-day scene variant + rain soundscape
+[PLAN]  scene 'Yesterday's Door' start=+0s dur=500s anchor=-
+[PLAN]  scene 'The River Gate Opens' start=+500s dur=700s anchor=hangang-bridge
+[PLAN]  scene 'Streets of Quiet Rain' start=+1200s dur=600s anchor=-
+[PLAN]  scene 'The Gate of Mirrors' start=+1800s dur=600s anchor=-
+[STATE] JOURNEY_PLANNED -> EPISODE_PLAYING (story starts with the journey)
+[SCENE] -> 'Yesterday's Door' (journey start; shift accepted=true)
+[WAYPOINT] passed 'hangang-bridge' -> WAYPOINT_SCENE_SHIFT (accepted=true)
+[LETTER] voice letter from the driver's child delivered at 'hangang-bridge' (20s)
+[SCENE] -> 'The River Gate Opens' (anchor waypoint 'hangang-bridge' passed; shift accepted=true)
+[SAFETY] focus zone 'Office Interchange' in 400m -> EPISODE_PLAYING -> STORY_PAUSED_FOCUS: story fades out at the sentence boundary; guidance only (bookmark: s2)
+[CHOICE] offer 'bridge-keeper' -> STORY_PAUSED_FOCUS (accepted=false): choice 'bridge-keeper' DEFERRED — interaction is never scheduled in a focus zone
+[DRIVER] reply '응' (fullyStopped=false) -> accepted=false: driver replies are never even asked for in a focus zone
+[SAFETY] focus zone cleared -> EPISODE_PLAYING: deferred choice 'bridge-keeper' may now be offered to passengers; one-line recap, then the story resumes
+[SAFETY] deferred choice 'bridge-keeper' is now offered to the passengers
+[WAYPOINT] passed 'office-interchange' -> CHOICE_PENDING (accepted=false)
+[SCHEDULE] journey is ahead of the story: scene 's3' compresses into a 45s summary narration
+[CHOICE] passengers picked 'help the keeper' -> EPISODE_PLAYING (accepted=true)
+[DRIVER] reply '응' (fullyStopped=true) -> accepted=true: driver's one-word reply '응' accepted at a full stop
+[DRIVER] detour accepted: 'Hangang View Rest Stop' added as a waypoint; episode plan re-fits the new route
+[ARRIVAL] EPISODE_PLAYING -> CLIFFHANGER: episode ends on its cliffhanger point — tomorrow's drive is already awaited
+[ARRIVAL] CLIFFHANGER -> ARRIVED: arrival is celebrated inside the story; voice summary follows
+[ARRIVAL] ARRIVED -> JOURNEY_COMPLETE: journey summary spoken and stored
+[DEMO] final state=JOURNEY_COMPLETE, transitions=16, audio utterances=6, detours added=[Hangang View Rest Stop]
+
+=== SCENARIO 2: Family Journey — weekend EV trip to Gangneung ===
+[PLAN] mode=FAMILY_JOURNEY destination='Gangneung' eta=9600s episode='The Dragon of the East Sea' scenes=3 cliffhanger alignment error=0s
+[PLAN] companion=PANDA genre=ADVENTURE theme='Cinematic Journey' voice=child companion/bright/cheerful
+[PLAN]  scene 'The Map in the Glove Box' start=+0s dur=2400s anchor=-
+[PLAN]  scene 'The Mountain Keeper' start=+2400s dur=3600s anchor=daegwallyeong
+[PLAN]  scene 'The Sea at the End of the Road' start=+6000s dur=3600s anchor=-
+[STATE] JOURNEY_PLANNED -> EPISODE_PLAYING (story starts with the journey)
+[SCENE] -> 'The Map in the Glove Box' (journey start; shift accepted=true)
+[VARIETY] traffic jam (ETA x1.50): side scene inserted, family voice game offered -> SIDE_SCENE: a hidden side episode plays; the main episode is NOT stretched
+[VARIETY] low-speed section: family voice-game mode offered to passengers
+[STATE] SIDE_SCENE -> EPISODE_PLAYING: main episode resumes
+[REST] 115 min of continuous driving -> the companion suggests 'Hoengseong Rest Area' in character, without breaking the story world
+[REST] break taken -> EPISODE_PLAYING: story resumes
+[EV] EV battery at 18%: character energy gauge low — tension up, nearest fast charger woven into the story
+[EV] charging started -> CHARGING_INTERLUDE: a short complete story sized to the charge time plays
+[EV] charging finished -> EPISODE_PLAYING: main journey story resumes
+[ARRIVAL] EPISODE_PLAYING -> CLIFFHANGER: episode ends on its cliffhanger point — tomorrow's drive is already awaited
+[ARRIVAL] CLIFFHANGER -> ARRIVED: arrival is celebrated inside the story; voice summary follows
+[ARRIVAL] ARRIVED -> JOURNEY_COMPLETE: journey summary spoken and stored
+[DEMO] final state=JOURNEY_COMPLETE, transitions=12, audio utterances=2
